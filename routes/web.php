@@ -19,5 +19,5 @@ Route::get('/', function () {
 });
 Route::get('/quanaothethao', [CrawController::class, 'crawQuanAoTheThao']);
 
-Route::get('/thegioididong', [CrawController::class, 'crawTheGioiDiDong']);
+Route::get('/hoanghamobile', [CrawController::class, 'crawTheGioiDiDong']);
 
