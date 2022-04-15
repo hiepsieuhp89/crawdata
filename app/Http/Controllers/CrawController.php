@@ -408,7 +408,7 @@ class CrawController extends Controller
 
         //Dien thoai di dong
         //Iphone
-        /*
+        
         $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/iphone?p=2';
         $code_pre="SMPIP";
         $img_end="_dtiphone.jpg";
@@ -489,7 +489,7 @@ class CrawController extends Controller
         $cat_id = 3;
         $manufac_id=1;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
-        */
+        
 
         //Dong ho
         //Apple watch
@@ -555,7 +555,7 @@ class CrawController extends Controller
                         $html = file_get_html($data[$i]->link);
 
                                 //get image list
-                                $imagelist = $html->find('#imagePreview .viewer')[0]->find('div img');
+                                $imagelist = $html->find('#imagePreview .viewer')[0]->find('div img[data-u="image"]');
                                 //dd($imagelist);
                                 foreach($imagelist as $key => $image){
                                     if($key==0 || $key%2!=0){
