@@ -408,12 +408,14 @@ class CrawController extends Controller
 
         //Dien thoai di dong
         //Iphone
+        /*
         $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/iphone?p=2';
         $code_pre="SMPIP";
         $img_end="_dtiphone.jpg";
         $cat_id = 1;
         $manufac_id=2;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+ 
         //Samsung
         $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/samsung?p=2';
         $code_pre="SMPSAMSUNG";
@@ -421,6 +423,8 @@ class CrawController extends Controller
         $cat_id = 1;
         $manufac_id=1;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        
+        
         //Xiaomi
         $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/xiaomi?p=2';
         $code_pre="SMPXIAO";
@@ -435,9 +439,10 @@ class CrawController extends Controller
         $cat_id = 1;
         $manufac_id=4;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        
 
 
-
+        
         //Laptop
         //Asus
         $url_craw = 'https://hoanghamobile.com/laptop/asus?p=2';
@@ -467,7 +472,7 @@ class CrawController extends Controller
         $cat_id = 2;
         $manufac_id=10;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
-
+        
 
         //Tablet
         //Ipad
@@ -484,6 +489,7 @@ class CrawController extends Controller
         $cat_id = 3;
         $manufac_id=1;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        */
 
         //Dong ho
         //Apple watch
@@ -498,6 +504,12 @@ class CrawController extends Controller
         return response("Done", 200);
     }
     public function crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id){
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        ); 
         if(true){
             $data =[];
             $html = file_get_html($url_craw);
@@ -525,9 +537,9 @@ class CrawController extends Controller
 
                             $imgg = $index_img++.$img_end;
 
-                            file_put_contents(public_path().'/media/imgProduct/images/'.$imgg, file_get_contents($url));
-                            file_put_contents(public_path().'/media/imgProduct/medium/'.$imgg, file_get_contents($url));
-                            file_put_contents(public_path().'/media/imgProduct/thumb/'.$imgg, file_get_contents($url));
+                            file_put_contents(public_path().'/media/imgProduct/images/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
+                            file_put_contents(public_path().'/media/imgProduct/medium/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
+                            file_put_contents(public_path().'/media/imgProduct/thumb/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
 
                             $data[$i]->imageLink = $imgg;
                         }
@@ -551,9 +563,9 @@ class CrawController extends Controller
                                         if(@file_get_contents($url) != false){
                                             $imgg = $index_img++.$img_end;
 
-                                            file_put_contents(public_path().'/media/imgProduct/images/'.$imgg, file_get_contents($url));
-                                            file_put_contents(public_path().'/media/imgProduct/medium/'.$imgg, file_get_contents($url));
-                                            file_put_contents(public_path().'/media/imgProduct/thumb/'.$imgg, file_get_contents($url));
+                                            file_put_contents(public_path().'/media/imgProduct/images/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
+                                            file_put_contents(public_path().'/media/imgProduct/medium/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
+                                            file_put_contents(public_path().'/media/imgProduct/thumb/'.$imgg, file_get_contents($url, false, stream_context_create($arrContextOptions)));
 
                                             array_push($arrayImg, $imgg);
                                         }
