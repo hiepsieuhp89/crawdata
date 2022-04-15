@@ -416,11 +416,84 @@ class CrawController extends Controller
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
         //Samsung
         $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/samsung?p=2';
-        $code_pre="SMSAMSUNG";
+        $code_pre="SMPSAMSUNG";
         $img_end="_dtsamsung.jpg";
         $cat_id = 1;
         $manufac_id=1;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //Xiaomi
+        $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/xiaomi?p=2';
+        $code_pre="SMPXIAO";
+        $img_end="_dtxiaomi.jpg";
+        $cat_id = 1;
+        $manufac_id=3;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //Oppo
+        $url_craw = 'https://hoanghamobile.com/dien-thoai-di-dong/oppo?p=2';
+        $code_pre="SMPOPPO";
+        $img_end="_dtoppo.jpg";
+        $cat_id = 1;
+        $manufac_id=4;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+
+
+
+        //Laptop
+        //Asus
+        $url_craw = 'https://hoanghamobile.com/laptop/asus?p=2';
+        $code_pre="LTASUS";
+        $img_end="_ltasus.jpg";
+        $cat_id = 2;
+        $manufac_id=11;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //Dell
+        $url_craw = 'https://hoanghamobile.com/laptop/dell?p=2';
+        $code_pre="LTDELL";
+        $img_end="_ltdell.jpg";
+        $cat_id = 2;
+        $manufac_id=8;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //MSI
+        $url_craw = 'https://hoanghamobile.com/laptop/msi?p=2';
+        $code_pre="LTMSI";
+        $img_end="_ltmsi.jpg";
+        $cat_id = 2;
+        $manufac_id=9;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //HP
+        $url_craw = 'https://hoanghamobile.com/laptop/hp?p=2';
+        $code_pre="LTHP";
+        $img_end="_lthp.jpg";
+        $cat_id = 2;
+        $manufac_id=10;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+
+
+        //Tablet
+        //Ipad
+        $url_craw = 'https://hoanghamobile.com/tablet/ipad?p=2';
+        $code_pre="TBLIPAD";
+        $img_end="_TBLIPAD.jpg";
+        $cat_id = 3;
+        $manufac_id=2;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+        //Samsung
+        $url_craw = 'https://hoanghamobile.com/tablet/samsung?p=2';
+        $code_pre="TBLSAMSUNG";
+        $img_end="_TBLSAMSUNG.jpg";
+        $cat_id = 3;
+        $manufac_id=1;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+
+        //Dong ho
+        //Apple watch
+        $url_craw = 'https://hoanghamobile.com/dong-ho/apple-watch?p=2';
+        $code_pre="SMWAPPLE";
+        $img_end="_SMWAPPLE.jpg";
+        $cat_id = 4;
+        $manufac_id=2;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+
 
         return response("Done", 200);
     }
@@ -436,7 +509,7 @@ class CrawController extends Controller
 
             //each product
             foreach($collection as $c){
-                if(0==0){
+                if(0==0 && @file_get_html('https://hoanghamobile.com'.$c->find('.info a')[0]->href) != false){
                     try{
                         $product_name = trim($c->find('.info a')[0]->plaintext);
                         $product_price=str_replace('&#x20AB;','',str_replace(',','',str_replace('₫','',str_replace('.','',$c->find('.price strong')[0]->plaintext))));
@@ -486,11 +559,16 @@ class CrawController extends Controller
                                         }
                                     }
                                 };
-
+                                //get specs
+                                $data[$i]->specs = $html->find('.specs-special')[0]->innertext;
                                 //get description
                                 $data[$i]->description = $html->find('#productContent')[0]->innertext;
-                                $data[$i]->description = str_replace('src="/Uploads','src="https://hoanghamobile.com//Uploads',$data[$i]->description);
-                                
+                                $data[$i]->description =
+                                str_replace('hoàng hà mobile','Whaale Mobile',
+                                    str_replace('Hoàng Hà Mobile','Whaale Mobile',
+                                        str_replace('src="/Uploads','src="https://hoanghamobile.com//Uploads',$data[$i]->description))
+                                );
+
 
                         $data[$i]->imageList = $arrayImg;
                     }
@@ -521,7 +599,7 @@ class CrawController extends Controller
                         'product_featured' => 0,
                         'product_new' => 0,
                         'description' => $insert->description,
-                        'content'=>'',
+                        'content'=>$insert->specs,
                         'xuatxu'=>2,
                         'chatlieu'=>'',
                         'khoanggia'=>7,

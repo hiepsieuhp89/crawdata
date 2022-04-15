@@ -14,9 +14,7 @@ use App\Http\Controllers\CrawController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CrawController::class, 'crawTheGioiDiDong']);
 Route::get('/quanaothethao', [CrawController::class, 'crawQuanAoTheThao']);
 
 Route::get('/hoanghamobile', [CrawController::class, 'crawTheGioiDiDong']);
