@@ -509,7 +509,7 @@ class CrawController extends Controller
 
             //each product
             foreach($collection as $c){
-                if(0==0){
+                if(0==0 && @file_get_html('https://hoanghamobile.com'.$c->find('.info a')[0]->href) != false){
                     try{
                         $product_name = trim($c->find('.info a')[0]->plaintext);
                         $product_price=str_replace('&#x20AB;','',str_replace(',','',str_replace('₫','',str_replace('.','',$c->find('.price strong')[0]->plaintext))));
