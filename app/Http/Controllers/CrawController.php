@@ -404,7 +404,7 @@ class CrawController extends Controller
     }
     public function crawTheGioiDiDong(){
 
-        set_time_limit(50000000);
+        set_time_limit(500000000);
 
         //Dien thoai di dong
         //Iphone
@@ -439,9 +439,6 @@ class CrawController extends Controller
         $cat_id = 1;
         $manufac_id=4;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
-        
-
-
         
         //Laptop
         //Asus
@@ -498,6 +495,14 @@ class CrawController extends Controller
         $img_end="_SMWAPPLE.jpg";
         $cat_id = 4;
         $manufac_id=2;
+        $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
+
+        //Samsung
+        $url_craw = 'https://hoanghamobile.com/dong-ho/sam-sung';
+        $code_pre="SMWSAMSUNG";
+        $img_end="_SMWSAMSUNG.jpg";
+        $cat_id = 4;
+        $manufac_id=1;
         $this->crawHoangHaMobile($url_craw, $code_pre, $img_end, $cat_id, $manufac_id);
 
 
