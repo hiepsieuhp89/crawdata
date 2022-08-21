@@ -15,7 +15,7 @@ use App\Http\Controllers\CrawController;
 */
 
 Route::get('/', function(){
-    return "hello world";
+    return file_get_contents("https://dict.laban.vn/widget/widget");
 });
 Route::get('/quanaothethao', [CrawController::class, 'crawQuanAoTheThao']);
 
